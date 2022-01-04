@@ -12,6 +12,6 @@ namespace OOD.DeckofCards.Models
         Spades,
         Clubs,
         Diamonds,
-        NA
+        Joker
     }
 }

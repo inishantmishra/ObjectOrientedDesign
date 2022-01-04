@@ -8,87 +8,68 @@ namespace OOD.DeckofCards.Models
 {
     public class Deck
     {
-        List<Card> Cards { get; set; }
+        List<Card> cards { get; set; }
 
-        public int CardCount => Cards.Count();
+        public int CardCount => cards.Count();
 
         public Deck()
         {
-            Cards = new List<Card>();
+            cards = new List<Card>();
             foreach(Suit suit in Enum.GetValues(typeof(Suit)))
             {
-                if (suit == Suit.NA)
-                {
-                    Cards.Add(new Card { CardSuit = Suit.NA, CardValue = 0, DisplayName="Joker" });
-                    Cards.Add(new Card { CardSuit = Suit.NA, CardValue = 0, DisplayName = "Joker" });
-                }
-                else
+                if (suit != Suit.Joker)
                 {
                     for (int i = 1; i <= 13; i++)
                     {
-                        string displayName;
-                        switch (i)
-                        {
-                            case 1:displayName= "Ace";
-                                break;
-                            case 11:
-                                displayName = "Jack";
-                                break;
-                            case 12:
-                                displayName = "Queen";
-                                break;
-                            case 13:
-                                displayName = "King";
-                                break;
-                            default: displayName = i.ToString();
-                                break;
-                        }
-                        Cards.Add(new Card() { CardSuit = suit, CardValue = i, DisplayName = displayName });
+                        cards.Add(new Card() { CardSuit = suit, CardValue = i });
                     }
                 }
             }
+            cards.Add(new Card { CardSuit = Suit.Joker, CardValue = 0 });
+            cards.Add(new Card { CardSuit = Suit.Joker, CardValue = 0 });
         }
 
         public void Shuffle()
         {
-            Random rand = new Random();
-            for(int i=0;i<Cards.Count();i++)
-            {
-                int randmNo = rand.Next(Cards.Count-1);
-                Card temp = Cards[i];
-                Cards[i] = Cards[randmNo];
-                Cards[randmNo] = temp;
-            }
+            //Random rand = new Random();
+            //for(int i=0;i<cards.Count();i++)
+            //{
+            //    int randmNo = rand.Next(cards.Count-1);
+            //    Card temp = cards[i];
+            //    cards[i] = cards[randmNo];
+            //    cards[randmNo] = temp;
+            //}
+
+            cards = cards.OrderBy(c => Guid.NewGuid()).ToList();
             
         }
 
         public void ShowCards()
         {
-            for(int i=0;i<Cards.Count;i++)
+            foreach(Card card in cards)
             {
-
-                Console.WriteLine($"{Cards[i].DisplayName} of {Cards[i].CardSuit}");
+                Console.WriteLine($"{card.DisplayName}");
             }
-            Console.WriteLine("Total Cards- " + Cards.Count());
+            Console.WriteLine("Total Cards- " + cards.Count());
 
             Console.WriteLine("-----------------------------------------------------------");
         }
 
         public Card DealCard()
         {
-            if (Cards.Count() == 0)
+            if (cards.Count() == 0)
                 return null;
 
 
-            Card card = Cards.First();
-            Cards.Remove(card);
+            Card card = cards.FirstOrDefault();
+            cards.Remove(card);
             return card;
         }
 
 
         public List<Player> DealCard(List<Player> players, int noOfCards)
         {
-            if (Cards.Count() == 0)
+            if (cards.Count() == 0)
                 return null;
 
             foreach(Player player in players)
@@ -96,8 +77,8 @@ namespace OOD.DeckofCards.Models
                 for(int n=0;n<noOfCards;n++)
                 {
 
-                    Card card = Cards.First();
-                    Cards.Remove(card);
+                    Card card = cards.First();
+                    cards.Remove(card);
                     player.Cards.Add(card);
                 }
             }
