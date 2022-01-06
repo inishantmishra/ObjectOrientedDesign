@@ -17,9 +17,13 @@ namespace OOD.DeckofCards.Models
             deck.Shuffle();
             deck.ShowCards();
 
-            //Players= new List<Player> { new Player { Name = "Nish" }, new Player { Name = "Nishant" } };
+            // This can also be tried for dealign cards to player
+            //for (int i = 0; i < Players.Count; i++)
+            //{
+            //    Players[i].Cards = GameDeck.DealCard(NoOfCardsPerPlayer);
+            //}
 
-            Players= deck.DealCard(Players, NoOfCardsPerPlayer);
+            Players = deck.DealCard(Players, NoOfCardsPerPlayer);
 
             foreach (var player in Players)
             {
