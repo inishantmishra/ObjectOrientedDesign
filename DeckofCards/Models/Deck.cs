@@ -71,6 +71,16 @@ namespace OOD.DeckofCards.Models
         {
             if (cards.Count() == 0)
                 return null;
+			
+			
+		//	List<Card> dealtCards= new List<Card>();
+        //	for(int i=0;i<noOfCards;i++)
+        //	{
+        //	Card card= Cards.FirstOrDefault();
+        //	Cards.Remove(card);
+        //	dealtCards.Add(card);
+        //	}
+        //  return dealtCards;
 
             foreach(Player player in players)
             {
